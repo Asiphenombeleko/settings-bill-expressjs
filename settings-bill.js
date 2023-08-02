@@ -3,11 +3,11 @@ export default function SettingsBill() {
     let smsCost;
     let callCost;
     let warningLevel;
-    let criticalLevel; 
+    let criticalLevel;
 
     let actionList = [];
 
-    function setSettings (settings) {
+    function setSettings(settings) {
         smsCost = Number(settings.smsCost);
         callCost = Number(settings.callCost);
         warningLevel = settings.warningLevel;
@@ -15,7 +15,7 @@ export default function SettingsBill() {
     }
 
     function getSettings
-    () {
+        () {
         return {
             smsCost,
             callCost,
@@ -27,28 +27,31 @@ export default function SettingsBill() {
     function recordAction(action) {
 
         let cost = 0;
-        if(cost <= warningLevel){
+        if (action != "call" && action != "sms") {
 
-        }
-        if (action === 'sms'){
-            cost = smsCost;
-        }
-        else if (action === 'call'){
-            cost = callCost;
+        } else {
+            if (action === 'sms') {
+                cost = smsCost;
+            }
+            else if (action === 'call') {
+                cost = callCost;
+            }
+            actionList.push({
+                type: action,
+                cost: cost,
+                timestamp: new Date()
+            });
         }
 
-        actionList.push({
-            type: action,
-            cost,
-            timestamp: new Date()
-        });
+
     }
 
-    function actions(){
+
+    function actions() {
         return actionList;
     }
 
-    function actionsFor(type){
+    function actionsFor(type) {
         const filteredActions = [];
 
         // loop through all the entries in the action list 
@@ -79,6 +82,7 @@ export default function SettingsBill() {
         }
         return total;
 
+
         // the short way using reduce and arrow functions
 
         // return actionList.reduce((total, action) => { 
@@ -97,19 +101,19 @@ export default function SettingsBill() {
         return {
             smsTotal,
             callTotal,
-            grandTotal : grandTotal()
+            grandTotal: grandTotal()
         }
     }
 
-    function hasReachedWarningLevel(){
+    function hasReachedWarningLevel() {
         const total = grandTotal();
-        const reachedWarningLevel = total >= warningLevel 
+        const reachedWarningLevel = total >= warningLevel
             && total < criticalLevel;
 
         return reachedWarningLevel;
     }
 
-    function hasReachedCriticalLevel(){
+    function hasReachedCriticalLevel() {
         const total = grandTotal();
         return total >= criticalLevel;
     }
