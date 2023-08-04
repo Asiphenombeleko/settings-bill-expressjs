@@ -49,14 +49,14 @@ app.post('/action', function(req, res){
 });
 
 app.get('/actions', function(req, res){
-    const timeFromNow = actionList.map(time => {
+    const timeFromNow = settingsBill.actions().map(time => {
         return{
         type: time.type, 
         cost : time.cost,
         timestamp : moment(time.timestamp).fromNow()
     }})
 
-    res.render('actions', {actions: settingsBill.actions() });
+    res.render('actions', {actions: timeFromNow });
 });
 app.get('/actions/:actionType', function(req, res){
     const actionType =  req.params.actionType;

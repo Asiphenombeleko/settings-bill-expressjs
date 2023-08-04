@@ -61,8 +61,8 @@ export default function SettingsBill() {
         }})
 
         // loop through all the entries in the action list 
-        for (let index = 0; index < actionList.length; index++) {
-            const action = actionList[index];
+        for (let index = 0; index < timeFromNow.length; index++) {
+            const action = timeFromNow[index];
             // check this is the type we are doing the total for 
             if (action.type === type) {
                 // add the action to the list
@@ -78,7 +78,7 @@ export default function SettingsBill() {
     function getTotal(type) {
         let total = 0;
         // loop through all the entries in the action list 
-        for (let index = 0; index < timeFromNow.length; index++) {
+        for (let index = 0; index < actionList.length; index++) {
             const action = actionList[index];
             // check this is the type we are doing the total for 
             if (action.type === type) {
