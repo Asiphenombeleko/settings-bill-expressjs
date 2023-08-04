@@ -1,6 +1,5 @@
-const assert = require('assert');
-const SettingsBill = require('../settings-bill');
-
+import assert from 'assert'
+import SettingsBill from '../test/settings-bill-test.js';
 describe('settings-bill', function(){
 
     const settingsBill = SettingsBill();

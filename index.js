@@ -3,6 +3,7 @@ import express from 'express'
 import {engine} from 'express-handlebars'
 import bodyParser from 'body-parser';
 import SettingsBill from './settings-bill.js';
+import moment from 'moment';
 
 const app = express();
 const settingsBill = SettingsBill()
@@ -48,6 +49,13 @@ app.post('/action', function(req, res){
 });
 
 app.get('/actions', function(req, res){
+    const timeFromNow = actionList.map(time => {
+        return{
+        type: time.type, 
+        cost : time.cost,
+        timestamp : moment(time.timestamp).fromNow()
+    }})
+
     res.render('actions', {actions: settingsBill.actions() });
 });
 app.get('/actions/:actionType', function(req, res){
