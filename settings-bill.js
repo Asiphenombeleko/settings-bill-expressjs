@@ -9,7 +9,7 @@ export default function SettingsBill() {
     let actionList = [];
 
     function setSettings(settings) {
-        
+
         smsCost = Number(settings.smsCost);
         callCost = Number(settings.callCost);
         warningLevel = settings.warningLevel;
@@ -55,11 +55,13 @@ export default function SettingsBill() {
 
     function actionsFor(type) {
         const filteredActions = [];
-        const timeFromNow = actionList.map(time => {return{
-            type: time.type, 
-            cost : time.cost,
-            timestamp : moment(time.timestamp).fromNow()
-        }})
+        const timeFromNow = actionList.map(time => {
+            return {
+                type: time.type,
+                cost: time.cost,
+                timestamp: moment(time.timestamp).fromNow()
+            }
+        })
 
         // loop through all the entries in the action list 
         for (let index = 0; index < timeFromNow.length; index++) {
@@ -98,17 +100,17 @@ export default function SettingsBill() {
         // }, 0);
     }
 
-    
+
     function grandTotal() {
-        
+
         return getTotal('sms') + getTotal('call');
     }
 
     function totals() {
-
+        
         let smsTotal = getTotal('sms').toFixed(2)
         let callTotal = getTotal('call').toFixed(2)
-        
+
         return {
             smsTotal,
             callTotal,
@@ -126,7 +128,15 @@ export default function SettingsBill() {
 
     function hasReachedCriticalLevel() {
         const total = grandTotal();
+
         return total >= criticalLevel;
+    }
+    function levelsReached() {
+        if (hasReachedWarningLevel()) {
+            return "warning";
+        } else if (hasReachedCriticalLevel()) {
+            return "danger";
+        }
     }
 
     return {
@@ -137,6 +147,8 @@ export default function SettingsBill() {
         actionsFor,
         totals,
         hasReachedWarningLevel,
-        hasReachedCriticalLevel
+        hasReachedCriticalLevel,
+        levelsReached
+
     }
 }
