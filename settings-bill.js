@@ -137,6 +137,11 @@ export default function SettingsBill() {
             return "danger";
         }
     }
+    function inializeToZero(){
+        smsCost = 0
+        callCost = 0
+        grandTotal() = 0
+    }
 
     return {
         setSettings,
@@ -147,7 +152,8 @@ export default function SettingsBill() {
         totals,
         hasReachedWarningLevel,
         hasReachedCriticalLevel,
-        levelsReached
+        levelsReached,
+        inializeToZero
 
     }
 }
