@@ -43,7 +43,10 @@ app.post('/settings', function (req, res) {
     res.redirect('/');
 
 });
-
+app.post('/reset', function(req, res){
+    settingsBill.reset()
+    res.redirect('/');
+})
 app.post('/action', function (req, res) {
     settingsBill.recordAction(req.body.actionType);
     res.redirect('/');
@@ -53,7 +56,7 @@ app.get('/actions', function (req, res) {
     const timeFromNow = settingsBill.actions().map(time => {
         return {
             type: time.type,
-            cost: time.cost,
+            cost: time.cost.toFixed(2),
             timestamp: moment(time.timestamp).fromNow()
         }
     })

@@ -52,12 +52,13 @@ export default function SettingsBill() {
         return actionList;
     }
 
+
     function actionsFor(type) {
         const filteredActions = [];
         const timeFromNow = actionList.map(time => {
             return {
                 type: time.type,
-                cost: time.cost,
+                cost: time.cost.toFixed(2),
                 timestamp: moment(time.timestamp).fromNow()
             }
         })
@@ -74,7 +75,7 @@ export default function SettingsBill() {
 
         return filteredActions;
 
-        // return actionList.filter((action) => action.type === type);
+       
     }
 
     function getTotal(type) {
@@ -89,15 +90,7 @@ export default function SettingsBill() {
             }
         }
         return total;
-
-
-        // the short way using reduce and arrow functions
-
-        // return actionList.reduce((total, action) => { 
-        //     let val = action.type === type ? action.cost : 0;
-        //     return total + val;
-        // }, 0);
-    }
+        }
 
 
     function grandTotal() {
@@ -136,11 +129,10 @@ export default function SettingsBill() {
         } else if (hasReachedCriticalLevel()) {
             return "danger";
         }
+
     }
-    function inializeToZero(){
-        smsCost = 0
-        callCost = 0
-        grandTotal() = 0
+    function reset(){
+        actionList.length = 0;
     }
 
     return {
@@ -153,7 +145,7 @@ export default function SettingsBill() {
         hasReachedWarningLevel,
         hasReachedCriticalLevel,
         levelsReached,
-        inializeToZero
+        reset
 
     }
 }
