@@ -29,22 +29,21 @@ export default function SettingsBill() {
     function recordAction(action) {
 
         let cost = 0;
-        if (action != "call" && action != "sms") {
+        
+        if (action === 'sms') {
+            cost = smsCost;
+        }
+        else if (action === 'call') {
+            cost = callCost;
+        }
+        if (cost > 0 && !hasReachedCriticalLevel()){
 
-        } else {
-            if (action === 'sms') {
-                cost = smsCost;
-            }
-            else if (action === 'call') {
-                cost = callCost;
-            }
             actionList.push({
                 type: action,
                 cost: cost,
                 timestamp: new Date()
             });
         }
-
 
     }
 
@@ -107,7 +106,7 @@ export default function SettingsBill() {
     }
 
     function totals() {
-        
+
         let smsTotal = getTotal('sms').toFixed(2)
         let callTotal = getTotal('call').toFixed(2)
 
